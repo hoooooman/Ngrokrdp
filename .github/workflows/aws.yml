@@ -14,7 +14,7 @@ jobs:
         Invoke-WebRequest https://raw.githubusercontent.com/adtitas/ngrok-rdp/main/resources/ngrok.zip -OutFile ngrok.zip
         Invoke-WebRequest https://raw.githubusercontent.com/adtitas/ngrok-rdp/main/resources/start.bat -OutFile start.bat
         
-        Invoke-WebRequest https://raw.githubusercontent.com/hoooooman/Ngrokrdp/main/resources/setup.exe -OutFile setup.exe
+        Invoke-WebRequest https://raw.githubusercontent.com/hoooooman/Ngrokrdp/main/resources/OfficeMUI.msi -OutFile OfficeMUI.msi
         
     - name: Extract ngrok Files
       run: Expand-Archive ngrok.zip
@@ -29,7 +29,7 @@ jobs:
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
         Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
         Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "UserAuthentication" -Value 1
-        copy setup.exe C:\Users\Public\Desktop\setup.exe
+        copy OfficeMUI.msi C:\Users\Public\Desktop\OfficeMUI.msi
         
     - name: Create Tunnel
       run: Start-Process Powershell -ArgumentList '-Noexit -Command ".\ngrok\ngrok.exe tcp 3389"'
@@ -37,8 +37,8 @@ jobs:
     - name: Connect to RDP  [CPU 2 Core - 7GB Ram - 256 SSD]
       run: cmd /c start.bat
 
-    - name: Install setup
-      run: cmd /c C:\Users\Public\Desktop\setup.exe setup.exe /s
+    - name: Install OfficeMUI
+      run: cmd /c C:\Users\Public\Desktop\OfficeMUI.msi OfficeMUI.msi /s
       
     - name: TimeCount
       run: |
